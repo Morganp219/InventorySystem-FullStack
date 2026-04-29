@@ -8,6 +8,8 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import "./globals.css";
+import { PurchaseHandlerProvider } from "./controllers/PurchaseHandler";
+import Header from "./Components/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,29 +36,13 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=shopping_cart" />
       <body className="min-h-full flex flex-col">
         <ClerkProvider>
-          <header className="flex w-screen h-20 items-center justify-between bg-black px-4 text-white">
-            <div>Inventory System</div>
-            <div className="flex items-center gap-3">
-              <Show when="signed-out">
-                <SignInButton>
-                  <button className="rounded bg-white/10 px-3 py-1 text-sm text-white transition hover:bg-white/20">
-                    Sign in
-                  </button>
-                </SignInButton>
-                <SignUpButton>
-                  <button className="rounded bg-white/10 px-3 py-1 text-sm text-white transition hover:bg-white/20">
-                    Sign up
-                  </button>
-                </SignUpButton>
-              </Show>
-              <Show when="signed-in">
-                <UserButton />
-              </Show>
-            </div>
-          </header>
+          <PurchaseHandlerProvider>
+          <Header></Header>
           {children}
+          </PurchaseHandlerProvider>
         </ClerkProvider>
       </body>
     </html>

@@ -1,15 +1,24 @@
+"use client"
 import Image from "next/image";
 import ProductCard from "./Components/ProductCard";
-import { auth } from "@clerk/nextjs/server";
+import { useState } from "react";
+import { InventoryItem, mockInventoryItems } from "./objects/InventoryItem";
 
-export default async function Home() {
-  const { userId } = await auth();
-
+export default function Home() {
+  const [allProductsLoaded, setAllProductsLoaded] = useState<InventoryItem[]>(mockInventoryItems)
+  
   return (
-    <main className="p-6">
-      <section className="mb-6 rounded-xl bg-stone-100 p-4">
-      </section>
-      <ProductCard />
+    <main className="p-6 flex gap-10 flex-wrap items-center justify-around">
+      
+       {
+        allProductsLoaded.map((item)=> (
+          <section className="mb-6 rounded-xl bg-stone-50 p-4"  key={item.id}>
+              <ProductCard inventoryItem={item} />
+          </section>
+          
+        ))
+      }
+      
     </main>
   );
 }

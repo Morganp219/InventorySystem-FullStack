@@ -1,5 +1,9 @@
+"use client"
 import Image from 'next/image';
-export default function ProductCard() {
+import { InventoryItem } from '../objects/InventoryItem';
+import { usePurchaseHandler } from '../controllers/PurchaseHandler';
+export default function ProductCard({inventoryItem}: {inventoryItem: InventoryItem}) {
+    const {addItemToCart} = usePurchaseHandler()
     return (
         <article className="flex flex-col max-w-70">
             <div className="border-b border-stone-200 bg-stone-100 p-4">
@@ -12,19 +16,34 @@ export default function ProductCard() {
                 <div className="flex justify-between flex-1">
                     <div className="flex flex-col">
                         <p className="text-sm font-light uppercase tracking-wide text-stone-500">Product</p>
-                        <h3 className="text-lg font-bold text-stone-900">Product Name</h3>
+                        <h3 className="text-lg font-bold text-stone-900">{inventoryItem.name}</h3>
                     </div>
                     <div className="flex flex-col">
                         <p className="rounded-md bg-stone-100 px-2 py-1 text-sm font-bold text-stone-700">$9.99</p>
                     </div>
                 </div>
 
-                <p className="text-sm leading-5 text-stone-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui dolorem excepturi adipisci non odit! Labore rem impedit quos facilis commodi reiciendis suscipit voluptates dicta, iure perferendis itaque, reprehenderit dignissimos unde?</p>
+                <p className="text-sm leading-5 text-stone-600">{inventoryItem.description}</p>
 
                 <div className="flex items-center justify-between rounded-lg bg-stone-50 px-3 py-2 text-sm">
                     <span className="font-medium text-stone-900">Availability</span>
-                    <span>In Store</span>
+                    <span>{inventoryItem.availableMedium}</span>
                 </div>
+                <button onClick={()=> {
+                    addItemToCart(inventoryItem)
+                }}>
+                    Add to Cart
+                </button>
+                <button onClick={()=> {
+                    buyItemById()
+                }}>
+                    Buy Now
+                </button>
+                <button onClick={()=> {
+                    
+                }}>
+                    Add to Wishlist
+                </button>
             </div>
         </article>
     )
